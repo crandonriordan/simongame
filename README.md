@@ -8,3 +8,8 @@ Creating a Simon game with the following user stories:
 * User Story: If I want to restart, I can hit a button to do so, and the game will return to a single step.
 * User Story: I can play in strict mode where if I get a button press wrong, it notifies me that I have done so, and the game restarts at a new random series of button presses.
 * User Story: I can win the game by getting a series of 20 steps correct. I am notified of my victory, then the game starts over.
+
+
+URLs to mp3 sounds 
+
+https://s3.amazonaws.com/freecodecamp/simonSound1.mp3, https://s3.amazonaws.com/freecodecamp/simonSound2.mp3, https://s3.amazonaws.com/freecodecamp/simonSound3.mp3, https://s3.amazonaws.com/freecodecamp/simonSound4.mp3.
