@@ -1,23 +1,129 @@
-/*
-Errno::ENOENT: No such file or directory @ rb_sysopen - ./styles/styles.scss
-
-Backtrace:
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:454:in `read'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:454:in `update_stylesheet'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:209:in `each'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/plugin/compiler.rb:294:in `watch'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/plugin.rb:109:in `method_missing'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/exec/sass_scss.rb:360:in `watch_or_update'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/exec/sass_scss.rb:51:in `process_result'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/exec/base.rb:52:in `parse'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/lib/sass/exec/base.rb:19:in `parse!'
-C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/sass-3.5.6/bin/sass:13:in `<top (required)>'
-C:/Ruby24-x64/bin/sass:23:in `load'
-C:/Ruby24-x64/bin/sass:23:in `<main>'
+/* http://meyerweb.com/eric/tools/css/reset/
+ v2.0 | 20110126
+ License: none (public domain)
 */
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Errno::ENOENT: No such file or directory @ rb_sysopen - ./styles/styles.scss"; }
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 0; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+*, *::before, *::after {
+  box-sizing: border-box; }
+
+h3 {
+  font-family: 'Press Start 2P', cursive; }
+
+#board {
+  margin: 50px auto;
+  width: 300px;
+  height: 300px;
+  position: relative;
+  background-color: #262626;
+  border-radius: 100%; }
+  #board .button {
+    border: 10px solid #262626;
+    cursor: pointer;
+    width: 49.3%;
+    height: 50%;
+    display: inline-block; }
+  #board .controls {
+    position: absolute;
+    top: 25%;
+    left: 25%;
+    background-color: #262626;
+    border-radius: 100%;
+    width: 50%;
+    height: 50%; }
+
+.controls {
+  text-align: center; }
+  .controls button {
+    display: inline-block;
+    color: white;
+    border-radius: 100%;
+    font-size: 1em;
+    width: 20%;
+    height: 20%;
+    margin: 25% auto;
+    position: relative; }
+    .controls button:focus {
+      outline: 0; }
+  .controls .start {
+    background-color: green; }
+  .controls .stop {
+    background-color: red; }
+  .controls .display {
+    color: white;
+    font-size: 0.5em; }
+
+#green {
+  background-color: green;
+  border-radius: 100% 0 0 0; }
+  #green:hover {
+    background-color: #004d00; }
+  #green .lit {
+    background-color: #00e600; }
+
+#red {
+  background-color: red;
+  border-radius: 0 100% 0 0; }
+  #red:hover {
+    background-color: #cc0000; }
+  #red .lit {
+    background-color: #ff6666; }
+
+#yellow {
+  background-color: yellow;
+  border-radius: 0 0 0 100%; }
+  #yellow:hover {
+    background-color: #cccc00; }
+  #yellow .lit {
+    background-color: #ffff66; }
+
+#blue {
+  background-color: blue;
+  border-radius: 0 0 100% 0; }
+  #blue:hover {
+    background-color: #0000cc; }
+  #blue .lit {
+    background-color: #6666ff; }
+
+/*# sourceMappingURL=styles.css.map */

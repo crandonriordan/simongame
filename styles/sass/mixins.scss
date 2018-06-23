@@ -30,7 +30,7 @@
   	display: block;
   }
   body {
-  	line-height: 1;
+  	line-height: 0;
   }
   ol, ul {
   	list-style: none;
@@ -52,5 +52,18 @@
 @mixin boxSizing {
   *, *::before, *::after {
     box-sizing: border-box;
+  }
+}
+
+@mixin fonts {
+  h3 {
+    font-family: 'Press Start 2P', cursive;
+  }
+}
+
+@mixin setBgAndHover($color) {
+  background-color: $color;
+  &:hover {
+    background-color: darken($color, 10);
   }
 }
