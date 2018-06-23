@@ -5,6 +5,11 @@
 @include boxSizing;
 @include fonts;
 
+
+body {
+  background-color: darken(white, 10)
+}
+
 #board {
   margin: 50px auto;
   width: 300px;
@@ -58,6 +63,10 @@
     background-color: red;
   }
 
+  .strict {
+    background-color: yellow;
+  }
+
   .display {
     color: white;
     font-size: .5em
@@ -67,31 +76,67 @@
 #green {
   @include setBgAndHover(green);
   border-radius: 100% 0 0 0;
-  .lit {
-    background-color: lighten(green, 20);
-  }
 }
 
 #red {
   @include setBgAndHover(red);
   border-radius: 0 100% 0 0;
-  .lit {
-    background-color: lighten(red, 20);
-  }
 }
 
 #yellow {
   @include setBgAndHover(yellow);
   border-radius: 0 0 0 100%;
-  .lit {
-    background-color: lighten(yellow, 20);
-  }
 }
 
 #blue {
   @include setBgAndHover(blue);
   border-radius: 0 0 100% 0;
-  .lit {
-    background-color: lighten(blue, 20);
+}
+
+section {
+  margin: 0 auto;
+  width: 50%;
+  display: block;
+  line-height: 1.4;
+  text-align: center;
+  h1,h2,h3 {
+    display: block;
   }
+
+  p {
+    display: inline-block;
+
+  }
+
+  .green {
+    color: green;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .yellow {
+    color: darken(yellow, 10);
+  }
+}
+
+.lit {
+  background-color: black    !important;
+}
+
+#green.lit {
+  background-color: lighten(green, 20)   !important;
+}
+
+#blue.lit {
+  background-color: lighten(blue, 20)    !important;
+}
+
+#red.lit {
+  background-color: lighten(red, 20)     !important;
+}
+
+#yellow.lit {
+  background-color: lighten(yellow, 20)  !important;
 }

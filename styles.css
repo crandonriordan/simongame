@@ -48,8 +48,11 @@ table {
 *, *::before, *::after {
   box-sizing: border-box; }
 
-h3 {
+h1, h2, h3, p {
   font-family: 'Press Start 2P', cursive; }
+
+body {
+  background-color: #e6e6e6; }
 
 #board {
   margin: 50px auto;
@@ -90,6 +93,8 @@ h3 {
     background-color: green; }
   .controls .stop {
     background-color: red; }
+  .controls .strict {
+    background-color: yellow; }
   .controls .display {
     color: white;
     font-size: 0.5em; }
@@ -99,31 +104,55 @@ h3 {
   border-radius: 100% 0 0 0; }
   #green:hover {
     background-color: #004d00; }
-  #green .lit {
-    background-color: #00e600; }
 
 #red {
   background-color: red;
   border-radius: 0 100% 0 0; }
   #red:hover {
     background-color: #cc0000; }
-  #red .lit {
-    background-color: #ff6666; }
 
 #yellow {
   background-color: yellow;
   border-radius: 0 0 0 100%; }
   #yellow:hover {
     background-color: #cccc00; }
-  #yellow .lit {
-    background-color: #ffff66; }
 
 #blue {
   background-color: blue;
   border-radius: 0 0 100% 0; }
   #blue:hover {
     background-color: #0000cc; }
-  #blue .lit {
-    background-color: #6666ff; }
+
+section {
+  margin: 0 auto;
+  width: 50%;
+  display: block;
+  line-height: 1.4;
+  text-align: center; }
+  section h1, section h2, section h3 {
+    display: block; }
+  section p {
+    display: inline-block; }
+  section .green {
+    color: green; }
+  section .red {
+    color: red; }
+  section .yellow {
+    color: #cccc00; }
+
+.lit {
+  background-color: black    !important; }
+
+#green.lit {
+  background-color: #00e600 !important; }
+
+#blue.lit {
+  background-color: #6666ff !important; }
+
+#red.lit {
+  background-color: #ff6666 !important; }
+
+#yellow.lit {
+  background-color: #ffff66 !important; }
 
 /*# sourceMappingURL=styles.css.map */

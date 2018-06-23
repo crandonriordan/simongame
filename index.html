@@ -10,10 +10,13 @@
   <title>Simon Game</title>
 </head>
 <body>
+
   <div id="board">
+
     <div class="controls">
       <button class="start" name="start" type="button" value="start"></button>
       <button class="stop" name="reset" type="button" value="reset"></button>
+      <button class="strict" name="strict" type="button" value="strict"></button>
       <div class="display"><h3>8-bit Display</h3></div>
     </div>
     <div id="green" class="button"></div>
@@ -21,6 +24,12 @@
     <div id="yellow"class="button"></div>
     <div id="blue" class="button"></div>
   </div>
+  <section>
+    <h2>Simon Game</h2>
+    <p><span class="green">Green</span> is start, <span class="red">red</span>
+       is reset, <span class="yellow">yellow</span> enables strict mode.</p>
+  </section>
+
   <script type="text/javascript" src="index.js" charset="utf-8" defer></script>
 </body>
 </html>
