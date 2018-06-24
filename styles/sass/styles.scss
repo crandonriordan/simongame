@@ -77,24 +77,36 @@ body {
   transition: background-color 300ms linear;
   @include setBgAndHover(green);
   border-radius: 100% 0 0 0;
+  &:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
+  }
 }
 
 #red {
   transition: background-color 300ms linear;
   @include setBgAndHover(red);
   border-radius: 0 100% 0 0;
+  &:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
+  }
 }
 
 #yellow {
   transition: background-color 300ms linear;
   @include setBgAndHover(yellow);
   border-radius: 0 0 0 100%;
+  &:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
+  }
 }
 
 #blue {
   transition: background-color 300ms linear;
   @include setBgAndHover(blue);
   border-radius: 0 0 100% 0;
+  &:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
+  }
 }
 
 section {

@@ -105,6 +105,8 @@ body {
   border-radius: 100% 0 0 0; }
   #green:hover {
     background-color: #004d00; }
+  #green:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 #red {
   transition: background-color 300ms linear;
@@ -112,6 +114,8 @@ body {
   border-radius: 0 100% 0 0; }
   #red:hover {
     background-color: #cc0000; }
+  #red:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 #yellow {
   transition: background-color 300ms linear;
@@ -119,6 +123,8 @@ body {
   border-radius: 0 0 0 100%; }
   #yellow:hover {
     background-color: #cccc00; }
+  #yellow:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 #blue {
   transition: background-color 300ms linear;
@@ -126,6 +132,8 @@ body {
   border-radius: 0 0 100% 0; }
   #blue:hover {
     background-color: #0000cc; }
+  #blue:active {
+    box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 section {
   margin: 0 auto;
