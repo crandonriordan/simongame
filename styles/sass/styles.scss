@@ -74,21 +74,25 @@ body {
 }
 
 #green {
+  transition: background-color 300ms linear;
   @include setBgAndHover(green);
   border-radius: 100% 0 0 0;
 }
 
 #red {
+  transition: background-color 300ms linear;
   @include setBgAndHover(red);
   border-radius: 0 100% 0 0;
 }
 
 #yellow {
+  transition: background-color 300ms linear;
   @include setBgAndHover(yellow);
   border-radius: 0 0 0 100%;
 }
 
 #blue {
+  transition: background-color 300ms linear;
   @include setBgAndHover(blue);
   border-radius: 0 0 100% 0;
 }
@@ -121,22 +125,22 @@ section {
   }
 }
 
-.lit {
-  background-color: black    !important;
-}
-
 #green.lit {
   background-color: lighten(green, 20)   !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 #blue.lit {
   background-color: lighten(blue, 20)    !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 #red.lit {
   background-color: lighten(red, 20)     !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 #yellow.lit {
   background-color: lighten(yellow, 20)  !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5);
 }

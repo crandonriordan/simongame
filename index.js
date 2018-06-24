@@ -3,45 +3,63 @@ let redButton = document.getElementById('red');
 let yellowButton = document.getElementById('yellow');
 let blueButton = document.getElementById('blue');
 
+let buttonObject = {
+  buttons: [greenButton, redButton, yellowButton, blueButton],
+  populateButtons: function(numberOfButtons) {
+    buttonArray = [];
+    for(let i = 0; i < numberOfButtons; i++) {
+      // hard coded because we only have four options in simon game
+      let indexOfButtonToAdd = getRandomInt(0, 4);
+      buttonArray[i] = this.buttons[indexOfButtonToAdd];
+    }
+
+    return buttonArray;
+  }
+}
+
 class Game {
   constructor() {
     this.isStarted = false;
     this.isStrict = false;
     this.gameCount = 0;
-    this.seriesOfButtons = [greenButton, redButton, yellowButton, blueButton];
+    this.seriesOfButtons = buttonObject.populateButtons(3); //need 20 btns for full simon game
   }
 
   gamePress() {
-    let length = this.seriesOfButtons.length;
-    let count = 0;
-    let timeoutOne = 100;
-    let timeoutTwo = 1000;
-    // increment timing for each loop;
-    let incrementalTime = 600;
-    // timing of presses
-    for(let i = 0; i < length; i++) {
-      let currButton = this.seriesOfButtons[i];
-      setTimeout(function() {
-        togglePress(currButton, "lit");
-        timeoutOne += incrementalTime;
-      }, timeoutOne)
+    // scope issue with this when trying to delay timing
+    let i = 0;
+    let btn = this.seriesOfButtons
+    var interval = setInterval(function () {
+      simulatedPress(this.seriesOfButtons[i]);
+      i++;
 
-      setTimeout(function() {
-        togglePress(currButton, "lit");
-        timeoutTwo += incrementalTime;
-      }, timeoutTwo)
-    }
+      if(i >= this.seriesOfButtons.length) {
+        clearInterval(interval);
+      }
+    }.bind(this), 800);
   }
-
 }
 
+// helper functions
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+// Start up
 let game = new Game();
-console.log(game);
 
+function simulatedPress(button) {
+  playSound(button.id);
+  button.classList.add("lit");
+  setTimeout(function() {
+    button.classList.remove("lit");
+  }, 400);
+}
 
-// anonymous functions
-
-// press() anon f(x)
-function togglePress(button, className) {
-  button.classList.toggle(className);
+function playSound(color) {
+  sounds[color].load();
+  sounds[color].play();
 }

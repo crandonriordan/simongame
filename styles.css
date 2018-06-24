@@ -100,24 +100,28 @@ body {
     font-size: 0.5em; }
 
 #green {
+  transition: background-color 300ms linear;
   background-color: green;
   border-radius: 100% 0 0 0; }
   #green:hover {
     background-color: #004d00; }
 
 #red {
+  transition: background-color 300ms linear;
   background-color: red;
   border-radius: 0 100% 0 0; }
   #red:hover {
     background-color: #cc0000; }
 
 #yellow {
+  transition: background-color 300ms linear;
   background-color: yellow;
   border-radius: 0 0 0 100%; }
   #yellow:hover {
     background-color: #cccc00; }
 
 #blue {
+  transition: background-color 300ms linear;
   background-color: blue;
   border-radius: 0 0 100% 0; }
   #blue:hover {
@@ -140,19 +144,20 @@ section {
   section .yellow {
     color: #cccc00; }
 
-.lit {
-  background-color: black    !important; }
-
 #green.lit {
-  background-color: #00e600 !important; }
+  background-color: #00e600 !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 #blue.lit {
-  background-color: #6666ff !important; }
+  background-color: #6666ff !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 #red.lit {
-  background-color: #ff6666 !important; }
+  background-color: #ff6666 !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 #yellow.lit {
-  background-color: #ffff66 !important; }
+  background-color: #ffff66 !important;
+  box-shadow: inset 5px 2px 5px rgba(0, 0, 0, 0.5); }
 
 /*# sourceMappingURL=styles.css.map */
