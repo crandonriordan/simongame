@@ -21,6 +21,7 @@ let buttonObject = {
 class Game {
 
   constructor() {
+    this.display = document.getElementById("display");
     this.isStarted = false;
     this.isStrict = false;
     this.playersTurn = false;
@@ -47,7 +48,7 @@ class Game {
         }
       }.bind(this), 800);
     } else {
-      throw `is not players turn or game isn't running`
+      throw 'is not players turn or game isn\'t running'
     }
   };
 
@@ -60,6 +61,7 @@ class Game {
     for(let i = 0; i < buttonObject.buttons.length; i++) {
       // push the clicked element to playerGuesses property
       buttonObject.buttons[i].onclick = function() {
+        playSound(buttonObject.buttons[i].id)
         this.playerGuesses.push(buttonObject.buttons[i]);
         // check if newly appended playerGuess is correct
         // if it is not
@@ -67,15 +69,25 @@ class Game {
         //playersTurn = false; clear playerGuesses; computerPress();
         if(this.playerGuesses[this.playerGuesses.length - 1]
           === this.seriesOfButtons[this.playerGuesses.length - 1]) {
+            // change turns to computer
+            this.blinkMessage("correct");
             if(this.playerGuesses.length === this.gameCount) {
+              console.log("inside if statement"); //debug
               this.removeClickListeners();
               this.playersTurn = false;
               this.playerGuesses.length = 0;
               this.gameCount++;
               this.computerPress();
             }
-        } else {
-            alert("wrong guess");
+        } else { // handle a wrong input
+            console.log("wrong guesses", this.numberOfWrongGuesses);
+            if(this.numberOfWrongGuesses > 1) {
+              console.log("number of guesses is too big");
+              this.blinkMessage("too many guesses");
+              this.setTimeout(this.reset, 200);
+            }
+            this.blinkMessage("wrong");
+            this.numberOfWrongGuesses++;
             this.removeClickListeners();
             this.playersTurn = false;
             this.playerGuesses.length = 0;
@@ -89,6 +101,40 @@ class Game {
     for(let i = 0; i < buttonObject.buttons.length; i++) {
       buttonObject.buttons[i].onclick = null;
     }
+  };
+
+  start() {
+    this.isStarted = true;
+    this.computerPress();
+  };
+
+  reset() {
+    console.log("resetting"); //debug
+    this.isStarted = false;
+    this.gameCount = 0;
+    this.seriesOfButtons = buttonObject.populateButtons(20);
+    this.numberOfWrongGuesses = 0;
+    this.isStrict = 0;
+    this.playersTurn = false;
+  };
+
+  strict() {
+    this.isStrict = true;
+  };
+
+  blinkMessage(string) {
+    let i = 0;
+    let interval = setInterval(function() {
+      if(i > 5) {
+        this.display.innerHTML = "8 bit display";
+        clearInterval(interval);
+      } else if(i % 2 == 0) {
+        this.display.innerHTML = string;
+      } else {
+        this.display.innerHTML = "";
+      }
+      i++;
+    }.bind(this), 200)
   };
 
 }
@@ -113,10 +159,14 @@ function simulatedPress(button) {
 }
 
 function playSound(color) {
+  // uses sounds object in audio.js
   sounds[color].load();
   sounds[color].play();
 }
 
 
 let game = new Game();
-game.isStarted = true;
+
+document.getElementById("start").onclick = game.start.bind(game);
+document.getElementById("reset").onclick = game.reset.bind(game);
+document.getElementById("strict").onclick = game.strict.bind(game);
