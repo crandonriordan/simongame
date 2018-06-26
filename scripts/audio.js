@@ -1,3 +1,5 @@
+'use strict';
+
 const sounds = {
   green: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"),
   red: new Audio("https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"),
@@ -8,4 +10,4 @@ const sounds = {
 function playSound(color) {
   sounds[color].load();
   sounds[color].play();
-};
+}

@@ -1,172 +1,202 @@
-let greenButton = document.getElementById('green');
-let redButton = document.getElementById('red');
-let yellowButton = document.getElementById('yellow');
-let blueButton = document.getElementById('blue');
+'use strict';
 
-// holds our option of buttons, and other button functions
-let buttonObject = {
-  buttons: [greenButton, redButton, yellowButton, blueButton],
-  populateButtons: function(numberOfButtons) {
-    buttonArray = [];
-    for(let i = 0; i < numberOfButtons; i++) {
-      // hard coded because we only have four options in simon game
-      let indexOfButtonToAdd = getRandomInt(0, 4);
-      buttonArray[i] = this.buttons[indexOfButtonToAdd];
+
+// get simon game buttons
+let green = document.getElementById("green");
+let red = document.getElementById("red");
+let yellow = document.getElementById("yellow");
+let blue = document.getElementById("blue");
+
+// random function for board object
+// used from mozillas MDN for JavaScript
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+// game has-a player relationship (composition)
+let player = {
+  isPlayersTurn: false,
+  numberOfGuesses: 0,
+  playerPresses: [],
+  emptyPresses: function() {
+    this.playerPresses.length = 0;
+  },
+
+  reset: function() {
+    this.isPlayersTurn = false;
+    this.emptyPresses();
+  }
+};
+
+// helper functions and holds our buttons
+let board = {
+  buttons: [green, red, yellow, blue],
+  // populate 20 random buttons
+  populateButtons: function() {
+    let randomButtons = [];
+    for(let i = 0; i < 20; i++) {
+      let randomInt = getRandomInt(0, 4);
+      randomButtons.push(this.buttons[randomInt]);
     }
-    return buttonArray;
+    return randomButtons;
+  },
+
+  isSameButton: function(buttonOne, buttonTwo) {
+    if(buttonOne === buttonTwo) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+
+  flashMessage: function(message) {
+    let display = document.getElementById("display");
+    let i = 0;
+    let interval = setInterval(function() {
+      if(i > 8) {
+        display.innerHTML = "8 bit display";
+        clearInterval(interval);
+      } else if(i % 2 == 0) {
+        display.innerHTML = message;
+      } else {
+        display.innerHTML = "";
+      }
+      i++;
+    }.bind(this), 100)
   }
 }
 
+function pressButton(button) {
+  button.classList.add("lit");
+  playSound(button.id);
+}
+
+function unPressButton(button) {
+  button.classList.remove("lit");
+}
 
 class Game {
-
   constructor() {
-    this.display = document.getElementById("display");
-    this.isStarted = false;
+    // states of game
     this.isStrict = false;
-    this.playersTurn = false;
-    this.playerGuesses = [];
-    this.numberOfWrongGuesses = 0;
-    this.gameCount = 1; // number of buttons to press (if 20 -> win)
-    this.seriesOfButtons = buttonObject.populateButtons(20); //need 20 btns for full simon game
-  };
-
-  // runs our simulated presses
-  computerPress() {
-    // scope issue with this when trying to delay timing
-    if(!this.playersTurn && this.isStarted) {
-      let i = 0;
-      let btn = this.seriesOfButtons
-      let interval = setInterval(function () {
-        simulatedPress(this.seriesOfButtons[i]);
-        i++;
-
-        if(i >= this.gameCount) {
-          clearInterval(interval);
-          this.playersTurn = true;
-          this.playerPress();
-        }
-      }.bind(this), 800);
-    } else {
-      throw 'is not players turn or game isn\'t running'
-    }
-  };
-
-  playerPress() {
-    this.addClickListeners();
-  };
-
-  //helpers
-  addClickListeners() {
-    for(let i = 0; i < buttonObject.buttons.length; i++) {
-      // push the clicked element to playerGuesses property
-      buttonObject.buttons[i].onclick = function() {
-        playSound(buttonObject.buttons[i].id)
-        this.playerGuesses.push(buttonObject.buttons[i]);
-        // check if newly appended playerGuess is correct
-        // if it is not
-        // alert(wrong), removeClickListeners,
-        //playersTurn = false; clear playerGuesses; computerPress();
-        if(this.playerGuesses[this.playerGuesses.length - 1]
-          === this.seriesOfButtons[this.playerGuesses.length - 1]) {
-            // change turns to computer
-            this.blinkMessage("correct");
-            if(this.playerGuesses.length === this.gameCount) {
-              console.log("inside if statement"); //debug
-              this.removeClickListeners();
-              this.playersTurn = false;
-              this.playerGuesses.length = 0;
-              this.gameCount++;
-              this.computerPress();
-            }
-        } else { // handle a wrong input
-            console.log("wrong guesses", this.numberOfWrongGuesses);
-            if(this.numberOfWrongGuesses > 1) {
-              console.log("number of guesses is too big");
-              this.blinkMessage("too many guesses");
-              this.setTimeout(this.reset, 200);
-            }
-            this.blinkMessage("wrong");
-            this.numberOfWrongGuesses++;
-            this.removeClickListeners();
-            this.playersTurn = false;
-            this.playerGuesses.length = 0;
-            this.computerPress();
-        }
-      }.bind(this);
-    }
-  };
-
-  removeClickListeners() {
-    for(let i = 0; i < buttonObject.buttons.length; i++) {
-      buttonObject.buttons[i].onclick = null;
-    }
+    this.isStarted = false;
+    this.gameCount = 1;
+    this._player = player;
+    this.buttonPresses = board.populateButtons();
+    document.getElementById("start").onclick = this.start.bind(this);
+    document.getElementById("reset").onclick = this.reset.bind(this);
+    document.getElementById("strict").onclick = this.strict.bind(this);
   };
 
   start() {
     this.isStarted = true;
-    this.computerPress();
+    this.showButtonPresses();
   };
 
   reset() {
-    console.log("resetting"); //debug
     this.isStarted = false;
-    this.gameCount = 0;
-    this.seriesOfButtons = buttonObject.populateButtons(20);
-    this.numberOfWrongGuesses = 0;
-    this.isStrict = 0;
-    this.playersTurn = false;
+    this.gameCount = 1;
+    this.isStrict = false;
+    this._player.reset();
+    this.removeListeners();
   };
 
   strict() {
-    this.isStrict = true;
+    if(this.isStrict) {
+      this.isStrict = false;
+    } else {
+      this.isStrict = true;
+    }
   };
 
-  blinkMessage(string) {
+  showButtonPresses() {
+    // show the button presses in a .5s on .5s off fashion
+    // show the correct amount (controlled by this.gameCount)
     let i = 0;
-    let interval = setInterval(function() {
-      if(i > 5) {
-        this.display.innerHTML = "8 bit display";
-        clearInterval(interval);
-      } else if(i % 2 == 0) {
-        this.display.innerHTML = string;
-      } else {
-        this.display.innerHTML = "";
-      }
-      i++;
-    }.bind(this), 200)
+    // make sure game is started
+    if(this.isStarted || this._player.isPlayersTurn) {
+      let interval = setInterval(function() {
+        if(i >= this.gameCount - 1) {
+          clearInterval(interval);
+          this._player.isPlayersTurn = true;
+          this.playerPresses();
+        }
+        let buttonToPress = this.buttonPresses[i];
+        pressButton(buttonToPress);
+        //turn off after .5s
+        setTimeout(function() {
+          unPressButton(buttonToPress);
+        }, 500);
+        i++;
+        // if we've shown the correct number stop the loop
+      }.bind(this), 1000);
+    } else if (!this.isStarted) {
+      throw "game not started";
+    } else {
+      throw "player's turn";
+    }
   };
 
+  playerPresses() {
+    this.addListeners();
+  }
+
+  addListeners() {
+    board.buttons.forEach(button => {
+      button.onclick = function() {
+        playSound(button.id);
+        this._player.playerPresses.push(button);
+        let indexOfRecent = this._player.playerPresses.length - 1
+        if(board.isSameButton(button, this.buttonPresses[indexOfRecent])) {
+          board.flashMessage("correct");
+          // if guessed the correct sequence entirely
+          // make this a function!!!!! CODE SMELL
+          let counter = 0;
+          this._player.playerPresses.forEach(button => {
+            if(button === this.buttonPresses[counter]) {
+              counter++;
+            }
+          });
+
+          if(counter === this.buttonPresses.length) {
+            this.win();
+            return;
+          }
+          counter = 0;
+
+          if(this._player.playerPresses.length === this.gameCount) {
+            this.gameCount++;
+            this._player.reset();
+            this.removeListeners();
+            this.showButtonPresses();
+          }
+        } else { // if it is incorrect
+          board.flashMessage("wrong");
+          this._player.numberOfGuesses++;
+          if(this.isStrict || this._player.numberOfGuesses > 1) {
+            this.reset();
+            return;
+          }
+          this.removeListeners();
+          this._player.reset();
+          setTimeout(this.showButtonPresses.bind(this), 500);
+        }
+      }.bind(this);
+    });
+  };
+
+  removeListeners() {
+    board.buttons.forEach(button => {
+      button.onclick = null;
+    });
+  };
+
+  win() {
+    board.flashMessage("WINNER!");
+    setTimeout(this.reset.bind(this), 1000);
+  }
 }
-
-// helper functions
-
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
-}
-
-// Start up
-
-
-function simulatedPress(button) {
-  playSound(button.id);
-  button.classList.add("lit");
-  setTimeout(function() {
-    button.classList.remove("lit");
-  }, 400);
-}
-
-function playSound(color) {
-  // uses sounds object in audio.js
-  sounds[color].load();
-  sounds[color].play();
-}
-
 
 let game = new Game();
-
-document.getElementById("start").onclick = game.start.bind(game);
-document.getElementById("reset").onclick = game.reset.bind(game);
-document.getElementById("strict").onclick = game.strict.bind(game);
